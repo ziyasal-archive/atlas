@@ -8,7 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SubsetStartIndexTest  {
 
     /*
-    Return subset start index
+    Returns start index of subset if one contains another for given lists, otherwise returns -1 
+    (lists will not be empty)
+    
     Given input:
     3 -> size of first list
     1
