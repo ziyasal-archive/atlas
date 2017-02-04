@@ -16,6 +16,8 @@ public class LookAndSayTest {
     11
     2  -> n  times
 
+    exp: 11 -> 21 -> 1211
+
     Expected: 1211
      */
     @Test
