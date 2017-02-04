@@ -1,2 +1,2 @@
 # atlas
-couple of problems and solutions in java
+couple of small problems and solutions in java
