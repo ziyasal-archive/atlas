@@ -9,19 +9,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SubsetStartIndexTest {
 
     /*
-    Returns start index of subset if one contains another for given lists, otherwise returns -1 
-    (lists will not be empty)
-    
-    Given input:
-    3 -> size of first list
-    1
-    3
-    2
-    2 -> size of second list
-    3
-    2
+    Implement a method 'find' that will find the starting index (zero based) where the 
+    second list occurs as a sub-list in the first list. It should return -1 if the sub-list cannot be found. 
+    Arguments are always given, not empty.
 
-    Expected: 1
+    Sample Input 1
+    list1 = (1, 2, 3)
+    list2 = (2, 3)
+
+    Sample Output 1
      */
     @Test
     public void find_Index_Test() {
