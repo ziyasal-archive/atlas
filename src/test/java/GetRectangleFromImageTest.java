@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.Stack;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GetRectangleFromImageTest {
@@ -13,6 +15,8 @@ public class GetRectangleFromImageTest {
         Outputs:
         Format1: {x: 3, y: 2, width: 3, height: 2}
         Format2: [2, 3, 3, 5]
+
+        Plus: Get multiple rectangle from image
      */
     @Test
     public void getRectangleFromImage_Test() {
@@ -30,20 +34,94 @@ public class GetRectangleFromImageTest {
                 {1, 1, 1, 1, 1, 1, 1}
         };
 
-        int[] result = getRect(image);
+        int[] rectangle = getRectangle(image);
 
-        System.out.println(
-                String.format(
-                        "x: %1$s, y: %2$s, width: %3$s, height: %4$s",
-                        result[0], result[1], result[2], result[3]));
+        int x = rectangle[0];
+        int y = rectangle[1];
+        int width = rectangle[2];
+        int height = rectangle[3];
+        System.out.println(String.format("x: %d, y: %d, width: %d, height: %d", x, y, width, height));
 
-        assertThat(result[0]).isEqualTo(3);
-        assertThat(result[1]).isEqualTo(2);
-        assertThat(result[2]).isEqualTo(3);
-        assertThat(result[3]).isEqualTo(2);
+        assertThat(x).isEqualTo(3);
+        assertThat(y).isEqualTo(2);
+        assertThat(width).isEqualTo(3);
+        assertThat(height).isEqualTo(2);
     }
 
-    static int[] getRect(int[][] image) {
+    @Test
+    public void getRectangleMultipleFromImage_Test() {
+
+        int[][] image = {
+                {1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 0, 0, 0, 1},
+                {1, 1, 1, 0, 0, 0, 1},
+                {1, 0, 0, 1, 1, 1, 1},
+                {1, 0, 0, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1}
+        };
+
+        Stack<int[]> rectangles = getRectangles(image);
+
+        for (int[] rectangle : rectangles) {
+            System.out.println(
+                    String.format("x: %d, y: %d, width: %d, height: %d",
+                            rectangle[0], rectangle[1], rectangle[2], rectangle[3]));
+        }
+    }
+
+    // NOT OPTIMIZED
+    private static Stack<int[]> getRectangles(int[][] image) {
+        Stack<int[]> rectangles = new Stack<>();
+        // array desc: [x, y, width, height]
+
+        Boolean rectFound = false;
+        for (int i = 0; i < image[0].length; i++) {
+
+            int[] row = image[i];
+
+            //increase height of rectangles which already found
+            if (rectangles.size() > 0) {
+                for (int[] rectangle : rectangles) {
+                    if (row[rectangle[0]] == 0) {
+                        rectangle[3]++;//increase height of rectangle
+                    }
+                }
+            }
+
+            // find rectangle and calculate width (height=1)
+            for (int j = 0; j < row.length; j++) {
+                if (row[j] == 0) {
+                    // if rectangle exists on the x coordinate break and try to find another one
+                    if (rectangles.size() > 0 && j == rectangles.lastElement()[0] /* x */) {
+                        break;
+                    } else {
+                        if (rectFound) {
+                            // increase width of current rectangle which is last element of stack
+                            rectangles.lastElement()[2]++;
+
+                        } else {
+
+                            rectFound = true;
+                            // [x, y, width, height]
+                            rectangles.add(new int[]{j, i, 1, 1});
+                        }
+                    }
+
+                }
+
+                if (row[j] == 1 && rectFound) {
+                    rectFound = false;
+                    break;
+                }
+            }
+        }
+
+        return rectangles;
+    }
+
+    private static int[] getRectangle(int[][] image) {
         Boolean rectFound = false;
         int x = 0, y = 0, width = 0, height = 0;
 
@@ -65,14 +143,11 @@ public class GetRectangleFromImageTest {
                             y = i;
                             width++;
                             rectFound = true;
+                            height++;
                         }
                     }
 
                     if (arr[j] == 1 && rectFound) break;
-                }
-
-                if (rectFound) {
-                    height++;
                 }
             }
         }
