@@ -49,7 +49,7 @@ public class GetRectangleFromImageTest {
     }
 
     @Test
-    public void getRectangleMultipleFromImage_Test() {
+    public void getRectanglesFromImage_Test() {
 
         int[][] image = {
                 {1, 1, 1, 1, 1, 1, 1},
