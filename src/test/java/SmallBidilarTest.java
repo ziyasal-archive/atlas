@@ -1,5 +1,8 @@
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SmallBidilarTest {
@@ -46,6 +49,34 @@ public class SmallBidilarTest {
             boolean result = isPalindrome(sentenceOrWord);
             assertThat(result).isEqualTo(true);
         }
+
+    }
+
+    @Test
+    public void howManyPalindromesAreInAWord_Test() {
+        String word = "barbarabar";
+
+        Set<String> palindromes = new HashSet<>();
+
+        for (int i = 0; i < word.length(); i++) {
+
+            palindromes.add(String.valueOf(word.charAt(i)));
+
+            for (int j = i + 2; j <= word.length(); j++) {
+
+                String tmp = word.substring(i, j);
+
+                if (isPalindrome(tmp)) {
+                    palindromes.add(tmp);
+                }
+            }
+        }
+
+        for (String w : palindromes) {
+            System.out.println(w);
+        }
+
+        assertThat(palindromes.size()).isEqualTo(7);
 
     }
 
