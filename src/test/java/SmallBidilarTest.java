@@ -1,10 +1,7 @@
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(Parameterized.class)
 public class SmallBidilarTest {
 
     /*
@@ -18,33 +15,63 @@ public class SmallBidilarTest {
         assertThat(result).isEqualTo(true);
     }
 
+
+    @Test
+    public void isPrime_Test() {
+        int[] primes = new int[]{
+                2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+                53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
+                127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179,
+                181, 191, 193, 197, 199
+        };
+
+        for (int i = 0; i < primes.length; i++) {
+            boolean result = isPrime(primes[i]);
+            assertThat(result).isEqualTo(true);
+        }
+
+    }
+
+    @Test
+    public void isPalindrome_Test() {
+        String[] palindromes = new String[]{
+                "Able was I ere I saw Elba",
+                "Never odd or even",
+                "madam",
+                "racecar",
+                "Was it a car or a cat I saw"
+        };
+
+        for (String sentenceOrWord : palindromes) {
+            boolean result = isPalindrome(sentenceOrWord);
+            assertThat(result).isEqualTo(true);
+        }
+
+    }
+
+    private boolean isPalindrome(String s) {
+        if (s.length() < 2) return true;
+
+        s = s.toLowerCase().replaceAll("\\s+", "");
+
+        int midPoint = s.length() / 2;
+
+        for (int i = 0, j = s.length() - 1; i <= midPoint && j >= midPoint; i++, j--) {
+            if (s.charAt(i) != s.charAt(j)) return false;
+        }
+
+        return true;
+
+    }
+
     private boolean anagram(String s1, String s2) {
+
         if (s1.length() != s2.length()) return false;
 
         int sum = 0;
         for (int i = 0; i < s1.length(); sum += s1.charAt(i) - s2.charAt(i), i++) ;
 
         return sum == 0;
-    }
-
-
-    @Parameterized.Parameters
-    public static Object[] data() {
-        return new Object[]{
-                2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
-                53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
-                127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179,
-                181, 191, 193, 197, 199
-        };
-    }
-
-    @Parameterized.Parameter
-    public int input;
-
-    @Test
-    public void isPrime_Test() {
-        boolean result = isPrime(input);
-        assertThat(result).isEqualTo(true);
     }
 
     private boolean isPrime(int n) {
