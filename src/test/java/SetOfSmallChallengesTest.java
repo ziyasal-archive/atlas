@@ -5,7 +5,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SmallBidilarTest {
+public class SetOfSmallChallengesTest {
 
     /*
     O(n) anagram
@@ -107,9 +107,8 @@ public class SmallBidilarTest {
 
     private boolean isPrime(int n) {
 
-        if (n == 1) {
-            return true;
-        } else {
+        if (n == 1) return true;
+        else {
             int sqrt = (int) Math.sqrt(n);
 
             for (int i = 2; i <= sqrt; i += 2) if (n % i == 0) return false;
