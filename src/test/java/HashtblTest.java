@@ -77,12 +77,11 @@ class Hashtbl<T, K> {
     void remove(T key) throws Exception {
         int idx = indexOf(key);
         ArrayList<HEntry<T, K>> bucket = table.get(idx);
-        if (bucket != null) {
-            for (int i = 0; i < bucket.size(); i++) {
-                if (bucket.get(i).getKey().equals(key)) {
-                    bucket.remove(i);
-                    break;
-                }
+
+        for (int i = 0; i < bucket.size(); i++) {
+            if (bucket.get(i).getKey().equals(key)) {
+                bucket.remove(i);
+                break;
             }
         }
 
@@ -90,7 +89,7 @@ class Hashtbl<T, K> {
     }
 }
 
-public class HastblTest {
+public class HashtblTest {
 
     @Test
     public void bidi_Test() {
