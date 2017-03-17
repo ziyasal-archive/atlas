@@ -4,6 +4,46 @@ import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
+ class Mamap {
+
+    int[] keys;
+    Object[] values;
+
+    int size = 20;
+    int N = 0;
+
+    public Mamap(int size) {
+        this.size = size;
+        keys = new int[this.size];
+        values = new Object[this.size];
+    }
+
+    public void put(Object key, Object value) {
+        //resize
+        int hashCode = key.hashCode();
+        keys[N] = hashCode;
+        values[N] = value;
+        N++;
+    }
+
+    public Object get(Object key) throws Exception {
+        int hashCode = key.hashCode();
+        int index = FindIndex(hashCode);
+
+        if (index == -1) throw new Exception("Key not found");
+        return values[index];
+    }
+
+    private int FindIndex(int hashCode) {
+        for (int i = 0; i < N; i++) {
+            if (keys[i] == hashCode) return i;
+        }
+
+        return -1;
+    }
+}
+
 public class UniqueIdentifyTest {
 
     /*
@@ -23,6 +63,18 @@ public class UniqueIdentifyTest {
         String[] result = getRepeated(strings);
 
         assertThat(result).isEqualTo(new String[]{"pc", "car"});
+    }
+
+    @Test
+    public void map_Test() throws Exception {
+        Mamap map = new Mamap(100);
+
+        map.put("A", "1");
+        map.put("B", "2");
+        map.put("C", "3");
+        map.put("D", "4");
+
+        String result = (String)map.get("C");
     }
 
     private String[] getRepeated(String[] strings) {
