@@ -15,10 +15,6 @@ public class IsSubsetTest {
        "even"
      Output:
        True
-
-       Implementations:
-       - O (n * log (n) ) /w binary search
-       - O (N)            /w hashset
      */
 
     @Test
@@ -29,14 +25,11 @@ public class IsSubsetTest {
 
         HashSet<Character> map = new HashSet<>(s1.length());
 
-        // O(n)
         for (int i = 0; i < s1.length(); i++) {
             map.add(s1.charAt(i));
         }
 
-        // O(m)
         for (int i = 0; i < s2.length(); i++) {
-            //contains O(1)
             result = map.contains(s2.charAt(i));
         }
 
@@ -52,8 +45,6 @@ public class IsSubsetTest {
         char[] s1Array = s1.toCharArray();
 
         Arrays.sort(s1Array);
-
-        //O( n*log(n) )
 
         for (int i = 0; i < s2.length(); i++) {
             result = Arrays.binarySearch(s1Array, s2.charAt(i)) > 0;
