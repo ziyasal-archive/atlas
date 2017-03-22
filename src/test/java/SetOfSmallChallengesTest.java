@@ -86,13 +86,23 @@ public class SetOfSmallChallengesTest {
         //Implement a Run Length Encoding Method (aaabbccaa -> a3b2c2a2)
 
         String input = "aaabbccaa";
+
+        String result = simpleEncode(input);
+
+        assertThat(result).isEqualTo("a3b2c2a2");
+
+
+    }
+
+    private String simpleEncode(String input) {
+
+        if (input.length() == 1) return String.format("%s%d", input, 1);
+
         StringBuilder sb = new StringBuilder();
 
         char current;
-        int currentCharCount=0;
-
+        int currentCharCount = 1;
         current = input.charAt(0);
-        currentCharCount++;
 
         for (int i = 1; i < input.length(); i++) {
             char tmp = input.charAt(i);
@@ -109,10 +119,7 @@ public class SetOfSmallChallengesTest {
         sb.append(String.format("%s%d", current, currentCharCount));
 
 
-        String result = sb.toString();
-        assertThat(result).isEqualTo("a3b2c2a2");
-
-
+        return sb.toString();
     }
 
     private boolean isPalindrome(String s) {
