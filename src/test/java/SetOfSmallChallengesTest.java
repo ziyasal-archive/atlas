@@ -7,6 +7,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SetOfSmallChallengesTest {
 
+    class node {
+        public node left, right;
+        public String value;
+
+        public node(String value) {
+            this.value = value;
+        }
+
+        public node(String value, node left, node right) {
+            this(value);
+            this.left = left;
+            this.right = right;
+        }
+
+    }
+
     /*
     O(n) anagram
      */
@@ -93,6 +109,34 @@ public class SetOfSmallChallengesTest {
 
 
     }
+
+    @Test
+    public void binaryTreeDepth_Test() {
+        node l2 = new node("l2", new node("l3"), new node("r3"));
+        node root = new node("roo", new node("l1", l2, null), new node("r1"));
+
+        int depth = depthSimple(root);
+
+        System.out.println(depth);
+
+        assertThat(depth).isEqualTo(3);
+    }
+
+    int depthSimple(node root) {
+        int ldepth = 0, rdepth = 0;
+
+        if (root.left == null && root.right == null)
+            return 0;
+
+        if (root.left != null) ldepth += 1 + depthSimple(root.left);
+
+        if (root.right != null) rdepth += 1 + depthSimple(root.right);
+
+        if (rdepth > ldepth) return rdepth;
+
+        return ldepth;
+    }
+
 
     private String simpleEncode(String input) {
 
